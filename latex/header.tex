@@ -1,0 +1,42 @@
+\documentclass[tikz,11pt, a4paper]{report}
+\setcounter{secnumdepth}{1}
+\setcounter{tocdepth}{2}
+\usepackage[margin=1.0in]{geometry}
+
+\usepackage[spanish]{layout}
+\usepackage[activeacute,spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[]{subfig}
+\usepackage[colorlinks]{hyperref}
+\usepackage{import} %reemplaza a input, incluyendo el path relativo al archivo
+\usepackage{lipsum}
+
+\usepackage[siunitx,american]{circuitikz}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+\usetikzlibrary{calc}
+
+\usepackage{pgfplots}
+
+\usepackage{textcomp}
+
+\usepackage{commath}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage[makeroom]{cancel}
+\usepackage{xfrac}
+
+\usepackage{tabu}
+\usepackage{multirow}
+\usepackage{tabularx}
+
+
+\newcommand{\rotarTester}[2]
+{  % #1 = name , #2 = rotation angle
+\begin{scope}[transform shape,rotate=#2]
+\draw[thick] (#1)node(){$\mathbf V$} circle (11pt);
+\draw[rotate=45,-latex] (#1)  +(-17pt,0) --+(17pt,0);
+\end{scope}
+}

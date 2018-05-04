@@ -58,7 +58,7 @@ endif
 
 nnoremap <F2> :!g++ -std=c++14 -o %< % <CR>
 nnoremap <F3> :!./%< <CR>
-nnoremap <F4> :!pdflatex % && evince %<.pdf <CR>
+nnoremap <F4> :!pdflatex main.tex && evince main.pdf <CR>
 
 set number
 set relativenumber

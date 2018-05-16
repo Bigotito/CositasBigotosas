@@ -1,28 +1,28 @@
 \input{../../../../header.tex}
-\usepackage{fancyhdr}
+%\usepackage{fancyhdr}
 
-\lhead[]{}
-\chead[]{}
-\rhead[]{}
-\renewcommand{\headrulewidth}{0pt}
+%\lhead[]{}
+%\chead[]{}
+%\rhead[]{}
+%\renewcommand{\headrulewidth}{0pt}
 
-\lfoot[UTN-FRC]{UTN FRC}
-\cfoot[\thepage]{\thepage}
-\rfoot[Gabriel González - 4R1 - G1]{Gabriel González - 4R1 - G1}
-\renewcommand{\footrulewidth}{0.5pt}
+%\lfoot[ UTN-FRC ]{ UTN FRC }
+%\cfoot[\thepage]{\thepage}
+%\rfoot[Gabriel González - 4R1 - G1]{Gabriel González - 4R1 - G1}
+%\renewcommand{\footrulewidth}{0.5pt}
 
-\fancypagestyle{plain}{
-\fancyhead[]{}
-\fancyhead[]{}
-\fancyhead[]{}
-\fancyfoot[UTN-FRC]{UTN-FRC}
-\fancyfoot[\thepage]{\thepage}
-\fancyfoot[Gabriel González - 4R1 - G1]{Gabriel González - 4R1 - G1}
-\renewcommand{\headrulewidth}{0pt}
-\renewcommand{\footrulewidth}{0.5pt}
-}
+%\fancypagestyle{plain}{
+%\fancyhead[]{}
+%\fancyhead[]{}
+%\fancyhead[]{}
+%\fancyfoot[ UTN-FRC ]{ UTN-FRC }
+%\fancyfoot[\thepage]{\thepage}
+%\fancyfoot[Gabriel González - 4R1 - G1]{Gabriel González - 4R1 - G1}
+%\renewcommand{\headrulewidth}{0pt}
+%\renewcommand{\footrulewidth}{0.5pt}
+%}
 
-\pagestyle{fancy}
+%\pagestyle{fancy}
 
 \begin{document}
 \chapter{Amplificadores realimentados}
@@ -34,42 +34,94 @@
 	\item Aumento del ancho de banda del amplificador.
 	\item Aumento de la estabilidad de frecuencia.
 \end{itemize}
-\section{Amplificador de tensión con muestra de tensión en serie}
 
-\begin{figure}[h!]
+\section{Amplificador de tensión con muestra de tensión en serie (Realimentación de Tensión en Serie)}
+
+\begin{figure}[h]
 	\includegraphics[width=0.8\linewidth]{./img/1.png}
 	\centering
 	\caption{Esquema general de bloques de un amplificador de tensión con muestra de tensión en serie}
 	\label{fig:amp1}
 \end{figure}
 
+\newpage
 
-\section{Amplificador de transconductancia con muestra de corriente en serie}
+\begin{figure}[h]
+	\includegraphics[width=0.8\linewidth]{./img/esq1.png}
+	\centering
+	\label{fig:esq_amp1}
+\end{figure}
 
-\begin{figure}[h!]
+\begin{itemize}
+	\item Impedancia de entrada a lazo cerrado muy alta.
+	\item Impedancia de salida a lazo cerrado baja.
+	\item La ganancia de la tensión se ve disminuida.
+	\item Cada uno de estos factores afectados por el factor de desensibilidad \textbf{D}.
+	\item Todos estos factores mejora las condiciones y propiedades del amplificador.
+\end{itemize}
+
+\section{Amplificador de transconductancia con muestra de corriente en serie (Realimentación de Corriente en Serie)}
+
+\begin{figure}[h]
 	\includegraphics[width=0.8\linewidth]{./img/2.png}
 	\centering
 	\caption{Esquema general de bloques de un amplificador de transconductancia con muestra de corriente en serie}
 	\label{fig:amp2}
 \end{figure}
-
 \newpage
-\section{Amplificador de corriente con muestra de corriente en paralelo}
+\begin{figure}[h]
+	\includegraphics[width=0.5\linewidth]{./img/esq2.png}
+	\centering
+	\label{fig:esq_amp2}
+\end{figure}
 
-\begin{figure}[h!]
+\begin{itemize}
+	\item Baja amplificación de tensión.
+	\item Baja transconductancia.
+	\item Alta desensibilidad.
+\end{itemize}
+
+\section{Amplificador de corriente con muestra de corriente en paralelo (Muestreo de Corriente en Paralelo)}
+
+\begin{figure}[h]
 	\includegraphics[width=0.8\linewidth]{./img/3.png}
 	\centering
 	\caption{Esquema general de bloques de un amplificador de corriente con muestra de corriente en paralelo}
 	\label{fig:amp3}
 \end{figure}
 
-\section{Amplificador de transresistencia con muestra de tensión en paralelo}
+\newpage
 
-\begin{figure}[h!]
+\begin{figure}[h]
+	\includegraphics[width=0.8\linewidth]{./img/esq3.png}
+	\centering
+	\label{fig:esq_amp3}
+\end{figure}
+
+\begin{itemize}
+	\item Impedancia de entrada a lazo cerrado muy baja.
+	\item Impedancia de salida a lazo cerrado alta.
+	\item La ganancia de corriente se ve disminuida.
+\end{itemize}
+
+\section{Amplificador de transresistencia con muestra de tensión en paralelo (Realimentación de tensión en paralelo)}
+
+\begin{figure}[h]
 	\includegraphics[width=0.8\linewidth]{./img/4.png}
 	\centering
 	\caption{Esquema general de bloques de un amplificador de transresistencia con muestra de tensión en paralelo}
 	\label{fig:amp4}
 \end{figure}
+\newpage
+\begin{figure}[h]
+	\includegraphics[width=0.5\linewidth]{./img/esq4.png}
+	\centering
+	\label{fig:esq_amp4}
+\end{figure}
+
+\begin{itemize}
+	\item Bajas impedancias de entrada y salida a lazo cerrado.
+	\item Reducción de transresistencia.
+\end{itemize}
 
 \end{document}

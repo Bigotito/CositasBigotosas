@@ -1,28 +1,28 @@
 \input{../../../../header.tex}
-%\usepackage{fancyhdr}
+\usepackage{fancyhdr}
 
-%\lhead[]{}
-%\chead[]{}
-%\rhead[]{}
-%\renewcommand{\headrulewidth}{0pt}
+\lhead[]{}
+\chead[]{}
+\rhead[]{}
+\renewcommand{\headrulewidth}{0pt}
 
-%\lfoot[ UTN-FRC ]{ UTN FRC }
-%\cfoot[\thepage]{\thepage}
-%\rfoot[Gabriel González - 4R1 - G1]{Gabriel González - 4R1 - G1}
-%\renewcommand{\footrulewidth}{0.5pt}
+\lfoot[ UTN-FRC ]{ UTN FRC }
+\cfoot[\thepage]{\thepage}
+\rfoot[Gabriel González - 4R1 - G1]{Gabriel González - 4R1 - G1}
+\renewcommand{\footrulewidth}{0.5pt}
 
-%\fancypagestyle{plain}{
-%\fancyhead[]{}
-%\fancyhead[]{}
-%\fancyhead[]{}
-%\fancyfoot[ UTN-FRC ]{ UTN-FRC }
-%\fancyfoot[\thepage]{\thepage}
-%\fancyfoot[Gabriel González - 4R1 - G1]{Gabriel González - 4R1 - G1}
-%\renewcommand{\headrulewidth}{0pt}
-%\renewcommand{\footrulewidth}{0.5pt}
-%}
+\fancypagestyle{plain}{
+\fancyhead[L]{Medidas Electrónicas I - Amplificadores realimentados - Características}
+\fancyhead[R]{}
+\fancyhead[C]{}
+\fancyfoot[L]{ UTN-FRC }
+\fancyfoot[C]{\thepage}
+\fancyfoot[R]{Gabriel González - 4R1 - G1}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.5pt}
+}
 
-%\pagestyle{fancy}
+\pagestyle{fancy}
 
 \begin{document}
 \chapter{Amplificadores realimentados}
@@ -123,5 +123,29 @@
 	\item Bajas impedancias de entrada y salida a lazo cerrado.
 	\item Reducción de transresistencia.
 \end{itemize}
+
+\section{Cuadros de comparación de amplificadores}
+
+\begin{center}\begin{tabu}{|c|c|c|c|c|} \hline
+  Parámetro     & Tensión               & Corriente             & Transconductancia		& Transresistencia      \\ \hline
+  $R_i$         & $\infty$              & 0                     & $\infty$              & 0                     \\ \hline
+  $R_o$         & 0                     & $\infty$              & $\infty$              & 0                     \\ \hline
+  Transferencia & $A_v=\dfrac{V_o}{V_s}$ & $A_i=\dfrac{I_L}{I_s}$ & $G_m=\dfrac{I_L}{V_s}$ & $R_m=\dfrac{V_L}{I_s}$ \\ \hline
+\end{tabu}\end{center}
+~\\~\\
+\begin{center}\tabulinesep=1.5mm\begin{tabu}{|c|c|c|c|c|}
+  \hline
+  Señal                                    & Tension/Serie              & Corriente/Serie            & Tension/Paralelo           & Corriente/Paralelo \\ \hline
+  $X_o$                                    & Tension                    & Corriente                  & Tension                    & Corriente \\ \hline
+  $X_s, X_f, X_d$                          & Tension                    & Tension                    & Corriente                  & Corriente \\ \hline
+  $A$                                      & $A_v$                      & $G_m$                      & $R_m$                      & $A_i$ \\ \hline
+  $\beta \left( \dfrac{X_f}{X_o}  \right)$ & $\dfrac{V_f}{V_o}$         & $\dfrac{V_f}{I_o}$         & $\dfrac{I_f}{V_o}$         & $\dfrac{I_f}{I_o}$ \\ \hline
+  $R_{of}$                                 & Disminuye                  & Aumenta                    & Disminuye                  & Aumenta \\ \hline
+  $R_{if}$                                 & Aumenta                    & Aumenta                    & Disminuye                  & Disminuye \\ \hline
+  $A.B.$                                   & Aumenta                    & Aumenta                    & Aumenta                    & Aumenta \\ \hline
+  Distorsión                               & \multirow{2}{*}{Disminuye} & \multirow{2}{*}{Disminuye} & \multirow{2}{*}{Disminuye} & \multirow{2}{*}{Disminuye} \\
+  no lineal                                &                            &                            &                            & \\ \hline
+  Característica                           & $A_v$                      & $G_m$                      & $A_i$                      & $R_m$ \\ \hline
+\end{tabu}\end{center}
 
 \end{document}

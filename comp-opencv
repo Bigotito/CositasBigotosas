@@ -1,0 +1,40 @@
+#!/bin/bash
+
+if [ -f ./CMakeLists.txt ];
+then
+	echo "CMakeLists.txt actualmente generado"
+else
+	echo "Generando CMakeLists.txt:"
+	echo "	.Ingrese nombre de proyecto (main_proy): "
+	read titulo
+	if [ -z $titulo ];
+	then
+		titulo="main_proy"
+	fi
+	echo "	.Ingrese nombre de archivo fuente (main.cpp): "
+	read fuente
+	if [ -z $fuente ];
+	then
+		fuente="main.cpp"
+	fi
+	echo "	.Ingrese nombre de ejecutable (main): "
+	read salida
+	if [ -z $salida ];
+	then
+		salida="main"
+		echo "papapa"
+	fi
+	echo "Generando..."
+	echo "cmake_minimum_required(VERSION 2.8)
+project( $titulo )
+find_package( OpenCV REQUIRED )
+include_directories( \${OpenCV_INCLUDE_DIRS} )
+add_executable( $salida $fuente )
+target_link_libraries( $titulo \${OpenCV_LIBS} )" > CMakeLists.txt
+	echo "Generado"
+fi
+
+echo "Compilando..."
+cmake .
+make
+echo "Listo"

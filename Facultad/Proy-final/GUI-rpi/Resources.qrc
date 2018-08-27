@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>seno.png</file>
+        <file>triangular.png</file>
+        <file>cuadrada.png</file>
+        <file>arb.png</file>
+        <file>opc.png</file>
+    </qresource>
+</RCC>

@@ -51,9 +51,11 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../GUI-rpi/main.cpp \
-		../GUI-rpi/mainwindow.cpp moc_mainwindow.cpp
+		../GUI-rpi/mainwindow.cpp qrc_Resources.cpp \
+		moc_mainwindow.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
+		qrc_Resources.o \
 		moc_mainwindow.o
 DIST          = /opt/Qt/5.11.0/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt/5.11.0/gcc_64/mkspecs/common/unix.conf \
@@ -401,6 +403,7 @@ Makefile: ../GUI-rpi/GUI-rpi.pro /opt/Qt/5.11.0/gcc_64/mkspecs/linux-g++/qmake.c
 		/opt/Qt/5.11.0/gcc_64/mkspecs/features/yacc.prf \
 		/opt/Qt/5.11.0/gcc_64/mkspecs/features/lex.prf \
 		../GUI-rpi/GUI-rpi.pro \
+		../GUI-rpi/Resources.qrc \
 		/opt/Qt/5.11.0/gcc_64/lib/libQt5Widgets.prl \
 		/opt/Qt/5.11.0/gcc_64/lib/libQt5Gui.prl \
 		/opt/Qt/5.11.0/gcc_64/lib/libQt5Core.prl
@@ -572,6 +575,7 @@ Makefile: ../GUI-rpi/GUI-rpi.pro /opt/Qt/5.11.0/gcc_64/mkspecs/linux-g++/qmake.c
 /opt/Qt/5.11.0/gcc_64/mkspecs/features/yacc.prf:
 /opt/Qt/5.11.0/gcc_64/mkspecs/features/lex.prf:
 ../GUI-rpi/GUI-rpi.pro:
+../GUI-rpi/Resources.qrc:
 /opt/Qt/5.11.0/gcc_64/lib/libQt5Widgets.prl:
 /opt/Qt/5.11.0/gcc_64/lib/libQt5Gui.prl:
 /opt/Qt/5.11.0/gcc_64/lib/libQt5Core.prl:
@@ -589,6 +593,7 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
+	$(COPY_FILE) --parents ../GUI-rpi/Resources.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /opt/Qt/5.11.0/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../GUI-rpi/mainwindow.h $(DISTDIR)/
 	$(COPY_FILE) --parents ../GUI-rpi/main.cpp ../GUI-rpi/mainwindow.cpp $(DISTDIR)/
@@ -616,8 +621,18 @@ check: first
 
 benchmark: first
 
-compiler_rcc_make_all:
+compiler_rcc_make_all: qrc_Resources.cpp
 compiler_rcc_clean:
+	-$(DEL_FILE) qrc_Resources.cpp
+qrc_Resources.cpp: ../GUI-rpi/Resources.qrc \
+		/opt/Qt/5.11.0/gcc_64/bin/rcc \
+		../GUI-rpi/opc.png \
+		../GUI-rpi/seno.png \
+		../GUI-rpi/triangular.png \
+		../GUI-rpi/arb.png \
+		../GUI-rpi/cuadrada.png
+	/opt/Qt/5.11.0/gcc_64/bin/rcc -name Resources ../GUI-rpi/Resources.qrc -o qrc_Resources.cpp
+
 compiler_moc_predefs_make_all: moc_predefs.h
 compiler_moc_predefs_clean:
 	-$(DEL_FILE) moc_predefs.h
@@ -754,7 +769,7 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_uic_clean 
+compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_header_clean compiler_uic_clean 
 
 ####### Compile
 
@@ -996,6 +1011,9 @@ mainwindow.o: ../GUI-rpi/mainwindow.cpp ../GUI-rpi/mainwindow.h \
 		/opt/Qt/5.11.0/gcc_64/include/QtWidgets/qabstractbutton.h \
 		/opt/Qt/5.11.0/gcc_64/include/QtWidgets/QWidget
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../GUI-rpi/mainwindow.cpp
+
+qrc_Resources.o: qrc_Resources.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_Resources.o qrc_Resources.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

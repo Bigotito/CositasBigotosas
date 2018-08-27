@@ -10,6 +10,7 @@
 #define UI_MAINWINDOW_H
 
 #include <QtCore/QVariant>
+#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QMainWindow>
@@ -34,6 +35,10 @@ public:
     QFrame *line_10;
     QPushButton *pBVpp;
     QPushButton *pushButton_2;
+    QPushButton *pushButton_3;
+    QPushButton *pushButton_4;
+    QPushButton *pushButton_5;
+    QPushButton *pushButton_6;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -111,7 +116,7 @@ public:
         line_10->setFrameShape(QFrame::HLine);
         pBVpp = new QPushButton(centralWidget);
         pBVpp->setObjectName(QStringLiteral("pBVpp"));
-        pBVpp->setGeometry(QRect(6, 438, 110, 41));
+        pBVpp->setGeometry(QRect(5, 436, 110, 41));
         QPalette palette;
         QBrush brush(QColor(0, 0, 0, 255));
         brush.setStyle(Qt::SolidPattern);
@@ -136,7 +141,7 @@ public:
         pBVpp->setFlat(true);
         pushButton_2 = new QPushButton(centralWidget);
         pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
-        pushButton_2->setGeometry(QRect(126, 438, 110, 41));
+        pushButton_2->setGeometry(QRect(126, 436, 110, 41));
         QPalette palette1;
         palette1.setBrush(QPalette::Active, QPalette::WindowText, brush);
         palette1.setBrush(QPalette::Active, QPalette::Button, brush);
@@ -164,6 +169,126 @@ public:
         pushButton_2->setPalette(palette1);
         pushButton_2->setAutoFillBackground(false);
         pushButton_2->setFlat(true);
+        pushButton_3 = new QPushButton(centralWidget);
+        pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
+        pushButton_3->setGeometry(QRect(250, 436, 91, 41));
+        QPalette palette2;
+        palette2.setBrush(QPalette::Active, QPalette::WindowText, brush);
+        palette2.setBrush(QPalette::Active, QPalette::Button, brush);
+        palette2.setBrush(QPalette::Active, QPalette::Light, brush3);
+        palette2.setBrush(QPalette::Active, QPalette::Text, brush3);
+        palette2.setBrush(QPalette::Active, QPalette::ButtonText, brush3);
+        palette2.setBrush(QPalette::Active, QPalette::Base, brush);
+        palette2.setBrush(QPalette::Active, QPalette::Window, brush);
+        palette2.setBrush(QPalette::Inactive, QPalette::WindowText, brush);
+        palette2.setBrush(QPalette::Inactive, QPalette::Button, brush);
+        palette2.setBrush(QPalette::Inactive, QPalette::Light, brush3);
+        palette2.setBrush(QPalette::Inactive, QPalette::Text, brush3);
+        palette2.setBrush(QPalette::Inactive, QPalette::ButtonText, brush3);
+        palette2.setBrush(QPalette::Inactive, QPalette::Base, brush);
+        palette2.setBrush(QPalette::Inactive, QPalette::Window, brush);
+        palette2.setBrush(QPalette::Disabled, QPalette::WindowText, brush2);
+        palette2.setBrush(QPalette::Disabled, QPalette::Button, brush);
+        palette2.setBrush(QPalette::Disabled, QPalette::Light, brush3);
+        palette2.setBrush(QPalette::Disabled, QPalette::Text, brush2);
+        palette2.setBrush(QPalette::Disabled, QPalette::ButtonText, brush2);
+        palette2.setBrush(QPalette::Disabled, QPalette::Base, brush);
+        palette2.setBrush(QPalette::Disabled, QPalette::Window, brush);
+        pushButton_3->setPalette(palette2);
+        pushButton_3->setAutoFillBackground(false);
+        QIcon icon;
+        icon.addFile(QStringLiteral(":/seno.png"), QSize(), QIcon::Normal, QIcon::Off);
+        pushButton_3->setIcon(icon);
+        pushButton_3->setIconSize(QSize(70, 60));
+        pushButton_3->setFlat(true);
+        pushButton_4 = new QPushButton(centralWidget);
+        pushButton_4->setObjectName(QStringLiteral("pushButton_4"));
+        pushButton_4->setGeometry(QRect(353, 436, 81, 41));
+        QPalette palette3;
+        palette3.setBrush(QPalette::Active, QPalette::WindowText, brush);
+        palette3.setBrush(QPalette::Active, QPalette::Button, brush);
+        palette3.setBrush(QPalette::Active, QPalette::Light, brush3);
+        palette3.setBrush(QPalette::Active, QPalette::Text, brush3);
+        palette3.setBrush(QPalette::Active, QPalette::ButtonText, brush3);
+        palette3.setBrush(QPalette::Active, QPalette::Base, brush);
+        palette3.setBrush(QPalette::Active, QPalette::Window, brush);
+        palette3.setBrush(QPalette::Inactive, QPalette::WindowText, brush);
+        palette3.setBrush(QPalette::Inactive, QPalette::Button, brush);
+        palette3.setBrush(QPalette::Inactive, QPalette::Light, brush3);
+        palette3.setBrush(QPalette::Inactive, QPalette::Text, brush3);
+        palette3.setBrush(QPalette::Inactive, QPalette::ButtonText, brush3);
+        palette3.setBrush(QPalette::Inactive, QPalette::Base, brush);
+        palette3.setBrush(QPalette::Inactive, QPalette::Window, brush);
+        palette3.setBrush(QPalette::Disabled, QPalette::WindowText, brush2);
+        palette3.setBrush(QPalette::Disabled, QPalette::Button, brush);
+        palette3.setBrush(QPalette::Disabled, QPalette::Light, brush3);
+        palette3.setBrush(QPalette::Disabled, QPalette::Text, brush2);
+        palette3.setBrush(QPalette::Disabled, QPalette::ButtonText, brush2);
+        palette3.setBrush(QPalette::Disabled, QPalette::Base, brush);
+        palette3.setBrush(QPalette::Disabled, QPalette::Window, brush);
+        pushButton_4->setPalette(palette3);
+        pushButton_4->setAutoFillBackground(false);
+        pushButton_4->setFlat(true);
+        pushButton_5 = new QPushButton(centralWidget);
+        pushButton_5->setObjectName(QStringLiteral("pushButton_5"));
+        pushButton_5->setGeometry(QRect(444, 436, 81, 41));
+        QPalette palette4;
+        palette4.setBrush(QPalette::Active, QPalette::WindowText, brush);
+        palette4.setBrush(QPalette::Active, QPalette::Button, brush);
+        palette4.setBrush(QPalette::Active, QPalette::Light, brush3);
+        palette4.setBrush(QPalette::Active, QPalette::Text, brush3);
+        palette4.setBrush(QPalette::Active, QPalette::ButtonText, brush3);
+        palette4.setBrush(QPalette::Active, QPalette::Base, brush);
+        palette4.setBrush(QPalette::Active, QPalette::Window, brush);
+        palette4.setBrush(QPalette::Inactive, QPalette::WindowText, brush);
+        palette4.setBrush(QPalette::Inactive, QPalette::Button, brush);
+        palette4.setBrush(QPalette::Inactive, QPalette::Light, brush3);
+        palette4.setBrush(QPalette::Inactive, QPalette::Text, brush3);
+        palette4.setBrush(QPalette::Inactive, QPalette::ButtonText, brush3);
+        palette4.setBrush(QPalette::Inactive, QPalette::Base, brush);
+        palette4.setBrush(QPalette::Inactive, QPalette::Window, brush);
+        palette4.setBrush(QPalette::Disabled, QPalette::WindowText, brush2);
+        palette4.setBrush(QPalette::Disabled, QPalette::Button, brush);
+        palette4.setBrush(QPalette::Disabled, QPalette::Light, brush3);
+        palette4.setBrush(QPalette::Disabled, QPalette::Text, brush2);
+        palette4.setBrush(QPalette::Disabled, QPalette::ButtonText, brush2);
+        palette4.setBrush(QPalette::Disabled, QPalette::Base, brush);
+        palette4.setBrush(QPalette::Disabled, QPalette::Window, brush);
+        pushButton_5->setPalette(palette4);
+        pushButton_5->setAutoFillBackground(false);
+        pushButton_5->setFlat(true);
+        pushButton_6 = new QPushButton(centralWidget);
+        pushButton_6->setObjectName(QStringLiteral("pushButton_6"));
+        pushButton_6->setGeometry(QRect(535, 436, 61, 41));
+        QPalette palette5;
+        palette5.setBrush(QPalette::Active, QPalette::WindowText, brush);
+        palette5.setBrush(QPalette::Active, QPalette::Button, brush);
+        palette5.setBrush(QPalette::Active, QPalette::Light, brush3);
+        palette5.setBrush(QPalette::Active, QPalette::Text, brush3);
+        palette5.setBrush(QPalette::Active, QPalette::ButtonText, brush3);
+        palette5.setBrush(QPalette::Active, QPalette::Base, brush);
+        palette5.setBrush(QPalette::Active, QPalette::Window, brush);
+        palette5.setBrush(QPalette::Inactive, QPalette::WindowText, brush);
+        palette5.setBrush(QPalette::Inactive, QPalette::Button, brush);
+        palette5.setBrush(QPalette::Inactive, QPalette::Light, brush3);
+        palette5.setBrush(QPalette::Inactive, QPalette::Text, brush3);
+        palette5.setBrush(QPalette::Inactive, QPalette::ButtonText, brush3);
+        palette5.setBrush(QPalette::Inactive, QPalette::Base, brush);
+        palette5.setBrush(QPalette::Inactive, QPalette::Window, brush);
+        palette5.setBrush(QPalette::Disabled, QPalette::WindowText, brush2);
+        palette5.setBrush(QPalette::Disabled, QPalette::Button, brush);
+        palette5.setBrush(QPalette::Disabled, QPalette::Light, brush3);
+        palette5.setBrush(QPalette::Disabled, QPalette::Text, brush2);
+        palette5.setBrush(QPalette::Disabled, QPalette::ButtonText, brush2);
+        palette5.setBrush(QPalette::Disabled, QPalette::Base, brush);
+        palette5.setBrush(QPalette::Disabled, QPalette::Window, brush);
+        pushButton_6->setPalette(palette5);
+        pushButton_6->setAutoFillBackground(false);
+        QIcon icon1;
+        icon1.addFile(QStringLiteral(":/opc.png"), QSize(), QIcon::Normal, QIcon::Off);
+        pushButton_6->setIcon(icon1);
+        pushButton_6->setIconSize(QSize(60, 40));
+        pushButton_6->setFlat(true);
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);
@@ -174,8 +299,13 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
-        pBVpp->setText(QApplication::translate("MainWindow", "Vpp = 15 V", nullptr));
+        pBVpp->setText(QApplication::translate("MainWindow", "Vpp = 15 V\n"
+"Offset = 4.2 V", nullptr));
         pushButton_2->setText(QApplication::translate("MainWindow", "Freq = 25 Hz", nullptr));
+        pushButton_3->setText(QString());
+        pushButton_4->setText(QApplication::translate("MainWindow", "10 ms/div", nullptr));
+        pushButton_5->setText(QApplication::translate("MainWindow", "5 V/div", nullptr));
+        pushButton_6->setText(QString());
     } // retranslateUi
 
 };

@@ -37,6 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->grafico->graph(0)->setPen(QPen(QColor(255,0,0),3));
 
     configuracion_act=configuracion_act.leer_mem();
+    acomodar_limx();
     actualizar();
 
 //    ui->grafico->xAxis->setRange(0,20);
@@ -59,15 +60,15 @@ MainWindow::~MainWindow()
 
 void MainWindow::actualizar()
 {
-    float lim_sup1,lim_sup2;
+    float lim_sup2;
     double c1;
     int c2;
     QString qtemp,qtemp2;
 
     configuracion_act.escribir_mem(&configuracion_act);
 
-    lim_sup1=1000/configuracion_act.freq;
-    ui->grafico->xAxis->setRange(0,lim_sup1);
+    //lim_sup1=1000/configuracion_act.freq;
+    ui->grafico->xAxis->setRange(0,limx);
     c2=configuracion_act.freq_mult+3;
 
     qtemp.clear();
@@ -75,7 +76,7 @@ void MainWindow::actualizar()
     qtemp+=QString::number(configuracion_act.freq);
 
     qtemp2.clear();
-    qtemp2+=QString::number(lim_sup1/4);
+    qtemp2+=QString::number(limx/((ui->grafico->xAxis->ticker()->tickCount())));
 
     switch (c2) {
     case 3: {
@@ -128,7 +129,7 @@ void MainWindow::actualizar()
         QVector<double> x(c_muestras+1),y(c_muestras+1);
 
         for(unsigned int i=0;i<c_muestras+1;i++) {
-            x[i]=lim_sup1*i/c_muestras;
+            x[i]=limx*i/c_muestras;
             c1=2*PI*configuracion_act.freq*qPow(10,configuracion_act.freq_mult);
             y[i]=((configuracion_act.vpp)/2)*qSin(c1*(x[i])*qPow(10,-(configuracion_act.freq_mult+3)))+configuracion_act.offset;
         }
@@ -148,7 +149,7 @@ void MainWindow::actualizar()
         QVector<double> x(c_muestras+1),y(c_muestras+1);
 
         for(unsigned int i=0;i<c_muestras+1;i++) {
-            x[i]=lim_sup1*i/c_muestras;
+            x[i]=limx*i/c_muestras;
 
             if(i<=c_muestras/2)
                 y[i]=((configuracion_act.vpp)/2)+configuracion_act.offset;
@@ -170,8 +171,8 @@ void MainWindow::actualizar()
 
         QVector<double> x(c_muestras+1),y(c_muestras+1);
 
-        for(unsigned int i=0;i<c_muestras+1;i++) {
-            x[i]=lim_sup1*i/c_muestras;
+        for(unsigned int i=0;i<c_muestras;i++) {
+            x[i]=limx*i/c_muestras;
 
             if(i<=c_muestras/4)
                 y[i]=(configuracion_act.vpp*2)*x[i]*qPow(10,-(configuracion_act.freq_mult+3))*configuracion_act.freq*qPow(10,configuracion_act.freq_mult)+configuracion_act.offset;
@@ -186,6 +187,18 @@ void MainWindow::actualizar()
     }
     }
 
+}
+
+void MainWindow::acomodar_limx()
+{
+    limx=1000/(configuracion_act.freq);
+
+    for(int i=0;i*5<1000;i++) {
+        if(limx <= i*5) {
+            limx = i*5;
+            break;
+            }
+    }
 }
 
 str_config str_config::leer_mem()

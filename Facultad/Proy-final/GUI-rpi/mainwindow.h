@@ -37,8 +37,10 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     config configuracion_act;
+    float limx;
     //double c_muestras;
     void actualizar(void);
+    void acomodar_limx(void);
     //void normalizar_conf(config* c_norm);
 
 private slots:

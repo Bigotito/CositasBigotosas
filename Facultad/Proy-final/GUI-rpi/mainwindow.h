@@ -1,7 +1,7 @@
 ﻿#ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 #define PI 3.14159265
-#define cmr50hz 100
+#define c_muestras 1000
 
 #include <QMainWindow>
 
@@ -37,9 +37,12 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     config configuracion_act;
-    double c_muestras;
+    //double c_muestras;
     void actualizar(void);
-    void normalizar_conf(config* c_norm);
+    //void normalizar_conf(config* c_norm);
+
+private slots:
+    void on_pBVpp_clicked();
 
 private:
     Ui::MainWindow *ui;

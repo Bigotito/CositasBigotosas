@@ -28,7 +28,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->grafico->yAxis->grid()->setZeroLinePen(Qt::NoPen);
     ui->grafico->xAxis->setLabel("[ms]");
     ui->grafico->xAxis->setLabelColor(Qt::yellow);
-    ui->grafico->yAxis->setLabel("[mV]");
+    ui->grafico->yAxis->setLabel("[V]");
     ui->grafico->yAxis->setLabelColor(Qt::yellow);
 
     //Carga de valores anteriores guardados en memoria
@@ -59,104 +59,133 @@ MainWindow::~MainWindow()
 
 void MainWindow::actualizar()
 {
-    float lim_sup;
+    float lim_sup1,lim_sup2;
+    double c1;
+    int c2;
+    QString qtemp,qtemp2;
 
-    normalizar_conf(&configuracion_act);
     configuracion_act.escribir_mem(&configuracion_act);
 
-    lim_sup=100/configuracion_act.freq;
-    ui->grafico->xAxis->setRange(0,lim_sup);
+    lim_sup1=1000/configuracion_act.freq;
+    ui->grafico->xAxis->setRange(0,lim_sup1);
+    c2=configuracion_act.freq_mult+3;
 
-    switch (configuracion_act.freq_mult) {
+    qtemp.clear();
+    qtemp+="Freq = ";
+    qtemp+=QString::number(configuracion_act.freq);
+
+    qtemp2.clear();
+    qtemp2+=QString::number(lim_sup1/4);
+
+    switch (c2) {
     case 3: {
         ui->grafico->xAxis->setLabel("[ms]");
+        qtemp+=" Hz";
+        qtemp2+=" ms/div";
         break;
     }
     case 6: {
         ui->grafico->xAxis->setLabel("[µs]");
+        qtemp+=" KHz";
+        qtemp2+=" µs/div";
         break;
     }
     case 9: {
         ui->grafico->xAxis->setLabel("[ns]");
+        qtemp+=" MHz";
+        qtemp2+=" ns/div";
+        break;
+    }
+    case 12: {
+        ui->grafico->xAxis->setLabel("[ps]");
+        qtemp+=" GHz";
+        qtemp2+=" ps/div";
         break;
     }
     }
+
+    ui->pBdivX->setText(qtemp2);
+    ui->pBfreq->setText(qtemp);
+
+    qtemp.clear();
+    qtemp+="Vpp = ";
+    qtemp+=QString::number(configuracion_act.vpp);
+    qtemp+=" V\nOffset = ";
+    qtemp+=QString::number(configuracion_act.offset);
+    qtemp+=" V";
+    ui->pBVpp->setText(qtemp);
 
     switch (configuracion_act.onda) {
     case 0: {
-        lim_sup=((configuracion_act.vpp)/2)+qAbs(configuracion_act.offset);
-        ui->grafico->yAxis->setRange(-lim_sup,lim_sup);
+        lim_sup2=((configuracion_act.vpp)/2)+qAbs(configuracion_act.offset);
+        ui->grafico->yAxis->setRange(-lim_sup2*1.5,lim_sup2*1.5);
 
-        c_muestras=50*cmr50hz/((configuracion_act.freq)*qPow(10,configuracion_act.freq_mult));
+        qtemp.clear();
+        qtemp+=QString::number(lim_sup2/2);
+        qtemp+=" V/div";
+        ui->pBdivY->setText(qtemp);
 
         QVector<double> x(c_muestras+1),y(c_muestras+1);
 
-        for(int i=0;i<c_muestras+1;i++) {
-            x[i]=(i*(configuracion_act.freq)/c_muestras);
-            y[i]=qSin(PI/10*x[i]);
+        for(unsigned int i=0;i<c_muestras+1;i++) {
+            x[i]=lim_sup1*i/c_muestras;
+            c1=2*PI*configuracion_act.freq*qPow(10,configuracion_act.freq_mult);
+            y[i]=((configuracion_act.vpp)/2)*qSin(c1*(x[i])*qPow(10,-(configuracion_act.freq_mult+3)))+configuracion_act.offset;
         }
-    }
-    }
-}
 
-void MainWindow::normalizar_conf(config *c_norm)
-{
-    int c1;
+        ui->grafico->graph(0)->setData(x,y);
+        break;
+    }
+    case 1: {
+        lim_sup2=((configuracion_act.vpp)/2)+qAbs(configuracion_act.offset);
+        ui->grafico->yAxis->setRange(-lim_sup2*1.5,lim_sup2*1.5);
 
-    c1=-((c_norm->freq_mult)+2);
+        qtemp.clear();
+        qtemp+=QString::number(lim_sup2/2);
+        qtemp+=" V/div";
+        ui->pBdivY->setText(qtemp);
 
-    switch (c1) {
-    case -2: {
-        c_norm->freq=(c_norm->freq)/10;
-        c_norm->freq_mult=(c_norm->freq_mult)+1;
+        QVector<double> x(c_muestras+1),y(c_muestras+1);
+
+        for(unsigned int i=0;i<c_muestras+1;i++) {
+            x[i]=lim_sup1*i/c_muestras;
+
+            if(i<=c_muestras/2)
+                y[i]=((configuracion_act.vpp)/2)+configuracion_act.offset;
+            else
+                y[i]=-((configuracion_act.vpp)/2)+configuracion_act.offset;
+        }
+
+        ui->grafico->graph(0)->setData(x,y);
         break;
     }
-    case -3: {
-        c_norm->freq=(c_norm->freq);
-        c_norm->freq_mult=(c_norm->freq_mult);
-        break;
-    }
-    case -4: {
-        c_norm->freq=(c_norm->freq)/100;
-        c_norm->freq_mult=(c_norm->freq_mult)+2;
-        break;
-    }
-    case -5: {
-        c_norm->freq=(c_norm->freq)/10;
-        c_norm->freq_mult=(c_norm->freq_mult)+1;
-        break;
-    }
-    case -6: {
-        c_norm->freq=(c_norm->freq);
-        c_norm->freq_mult=(c_norm->freq_mult);
-        break;
-    }
-    case -7: {
-        c_norm->freq=(c_norm->freq)/100;
-        c_norm->freq_mult=(c_norm->freq_mult)+2;
-        break;
-    }
-    case -8: {
-        c_norm->freq=(c_norm->freq)/10;
-        c_norm->freq_mult=(c_norm->freq_mult)+1;
-        break;
-    }
-    case -9: {
-        c_norm->freq=(c_norm->freq);
-        c_norm->freq_mult=(c_norm->freq_mult);
-        break;
-    }
-    case -10: {
-        c_norm->freq=(c_norm->freq)/100;
-        c_norm->freq_mult=(c_norm->freq_mult)+2;
-        break;
-    }
-    case -11: {
-        c_norm->freq=(c_norm->freq)/10;
-        c_norm->freq_mult=(c_norm->freq_mult)+1;
+    case 2: {
+        lim_sup2=((configuracion_act.vpp)/2)+qAbs(configuracion_act.offset);
+        ui->grafico->yAxis->setRange(-lim_sup2*1.5,lim_sup2*1.5);
+
+        qtemp.clear();
+        qtemp+=QString::number(lim_sup2/2);
+        qtemp+=" V/div";
+        ui->pBdivY->setText(qtemp);
+
+        QVector<double> x(c_muestras+1),y(c_muestras+1);
+
+        for(unsigned int i=0;i<c_muestras+1;i++) {
+            x[i]=lim_sup1*i/c_muestras;
+
+            if(i<=c_muestras/4)
+                y[i]=(configuracion_act.vpp*2)*x[i]*qPow(10,-(configuracion_act.freq_mult+3))*configuracion_act.freq*qPow(10,configuracion_act.freq_mult)+configuracion_act.offset;
+            else if (i<=c_muestras*3/4)
+                y[i]=-(configuracion_act.vpp*2)*x[i]*qPow(10,-(configuracion_act.freq_mult+3))*configuracion_act.freq*qPow(10,configuracion_act.freq_mult)+configuracion_act.vpp+configuracion_act.offset;
+            else
+                y[i]=(configuracion_act.vpp*2)*x[i]*qPow(10,-(configuracion_act.freq_mult+3))*configuracion_act.freq*qPow(10,configuracion_act.freq_mult)-2*configuracion_act.vpp+configuracion_act.offset;
+        }
+
+        ui->grafico->graph(0)->setData(x,y);
         break;
     }
     }
+
 }
 
 str_config str_config::leer_mem()
@@ -216,4 +245,9 @@ void str_config::escribir_mem(str_config *actual)
     }
 
     arch_conf.close();
+}
+
+void MainWindow::on_pBVpp_clicked()
+{
+
 }

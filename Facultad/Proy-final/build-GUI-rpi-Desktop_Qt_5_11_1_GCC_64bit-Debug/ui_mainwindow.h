@@ -16,6 +16,7 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QScrollBar>
 #include <QtWidgets/QWidget>
 #include "qcustomplot.h"
 
@@ -38,6 +39,7 @@ public:
     QPushButton *pBdivY;
     QPushButton *pBopc;
     QCustomPlot *grafico;
+    QScrollBar *verticalScrollBar;
     QLabel *label;
     QLabel *label_2;
 
@@ -251,6 +253,23 @@ public:
         grafico = new QCustomPlot(centralWidget);
         grafico->setObjectName(QStringLiteral("grafico"));
         grafico->setGeometry(QRect(1, 1, 598, 430));
+        verticalScrollBar = new QScrollBar(grafico);
+        verticalScrollBar->setObjectName(QStringLiteral("verticalScrollBar"));
+        verticalScrollBar->setGeometry(QRect(90, 230, 16, 160));
+        QPalette palette5;
+        QBrush brush4(QColor(52, 101, 164, 255));
+        brush4.setStyle(Qt::SolidPattern);
+        palette5.setBrush(QPalette::Active, QPalette::Button, brush4);
+        palette5.setBrush(QPalette::Active, QPalette::Base, brush);
+        palette5.setBrush(QPalette::Active, QPalette::Window, brush);
+        palette5.setBrush(QPalette::Inactive, QPalette::Button, brush4);
+        palette5.setBrush(QPalette::Inactive, QPalette::Base, brush);
+        palette5.setBrush(QPalette::Inactive, QPalette::Window, brush);
+        palette5.setBrush(QPalette::Disabled, QPalette::Button, brush4);
+        palette5.setBrush(QPalette::Disabled, QPalette::Base, brush);
+        palette5.setBrush(QPalette::Disabled, QPalette::Window, brush);
+        verticalScrollBar->setPalette(palette5);
+        verticalScrollBar->setOrientation(Qt::Vertical);
         label = new QLabel(centralWidget);
         label->setObjectName(QStringLiteral("label"));
         label->setGeometry(QRect(-2, 434, 611, 46));

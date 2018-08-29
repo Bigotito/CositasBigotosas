@@ -38,9 +38,11 @@ public:
     ~MainWindow();
     config configuracion_act;
     float limx;
+    float limy;
     //double c_muestras;
     void actualizar(void);
     void acomodar_limx(void);
+    void acomodar_limy(void);
     //void normalizar_conf(config* c_norm);
 
 private slots:

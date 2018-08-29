@@ -35,9 +35,23 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->grafico->addGraph();
     ui->grafico->graph(0)->setPen(QPen(QColor(255,0,0),3));
+    ui->grafico->yAxis->ticker()->setTickCount(10);
+
+    ui->lbSlVpp->setVisible(false);
+    ui->lbSloffset->setVisible(false);
+    ui->lbSlFreq->setVisible(false);
+    ui->lbSldivx->setVisible(false);
+    ui->lbSldivy->setVisible(false);
+    ui->SlVpp->setVisible(false);
+    ui->Sloffset->setVisible(false);
+    ui->SlFreq->setVisible(false);
+    ui->Sldivx->setVisible(false);
+    ui->Sldivy->setVisible(false);
+    ui->gbondas->setVisible(false);
 
     configuracion_act=configuracion_act.leer_mem();
     acomodar_limx();
+    acomodar_limy();
     actualizar();
 
 //    ui->grafico->xAxis->setRange(0,20);
@@ -60,14 +74,14 @@ MainWindow::~MainWindow()
 
 void MainWindow::actualizar()
 {
-    float lim_sup2;
+    float lim_sup1,lim_sup2;
     double c1;
     int c2;
     QString qtemp,qtemp2;
 
     configuracion_act.escribir_mem(&configuracion_act);
 
-    //lim_sup1=1000/configuracion_act.freq;
+    lim_sup1=1000/configuracion_act.freq;
     ui->grafico->xAxis->setRange(0,limx);
     c2=configuracion_act.freq_mult+3;
 
@@ -76,7 +90,11 @@ void MainWindow::actualizar()
     qtemp+=QString::number(configuracion_act.freq);
 
     qtemp2.clear();
-    qtemp2+=QString::number(limx/((ui->grafico->xAxis->ticker()->tickCount())));
+
+    if(((int)limx)%20 == 0)
+        qtemp2+=QString::number(limx/4);
+    else
+        qtemp2+=QString::number(limx/5);
 
     switch (c2) {
     case 3: {
@@ -116,13 +134,14 @@ void MainWindow::actualizar()
     qtemp+=" V";
     ui->pBVpp->setText(qtemp);
 
+    lim_sup2=limy;
+
     switch (configuracion_act.onda) {
     case 0: {
-        lim_sup2=((configuracion_act.vpp)/2)+qAbs(configuracion_act.offset);
-        ui->grafico->yAxis->setRange(-lim_sup2*1.5,lim_sup2*1.5);
+        ui->grafico->yAxis->setRange(-lim_sup2,lim_sup2);
 
         qtemp.clear();
-        qtemp+=QString::number(lim_sup2/2);
+        qtemp+=QString::number(lim_sup2/5);
         qtemp+=" V/div";
         ui->pBdivY->setText(qtemp);
 
@@ -138,20 +157,22 @@ void MainWindow::actualizar()
         break;
     }
     case 1: {
-        lim_sup2=((configuracion_act.vpp)/2)+qAbs(configuracion_act.offset);
-        ui->grafico->yAxis->setRange(-lim_sup2*1.5,lim_sup2*1.5);
+        ui->grafico->yAxis->setRange(-lim_sup2,lim_sup2);
 
         qtemp.clear();
-        qtemp+=QString::number(lim_sup2/2);
+        qtemp+=QString::number(lim_sup2/5);
         qtemp+=" V/div";
         ui->pBdivY->setText(qtemp);
 
         QVector<double> x(c_muestras+1),y(c_muestras+1);
+        double xt;
 
         for(unsigned int i=0;i<c_muestras+1;i++) {
             x[i]=limx*i/c_muestras;
 
-            if(i<=c_muestras/2)
+            xt=x[i]-lim_sup1*(int)((x[i])/lim_sup1);
+
+            if(xt<=lim_sup1/2)
                 y[i]=((configuracion_act.vpp)/2)+configuracion_act.offset;
             else
                 y[i]=-((configuracion_act.vpp)/2)+configuracion_act.offset;
@@ -161,25 +182,28 @@ void MainWindow::actualizar()
         break;
     }
     case 2: {
-        lim_sup2=((configuracion_act.vpp)/2)+qAbs(configuracion_act.offset);
-        ui->grafico->yAxis->setRange(-lim_sup2*1.5,lim_sup2*1.5);
+        ui->grafico->yAxis->setRange(-lim_sup2,lim_sup2);
 
         qtemp.clear();
-        qtemp+=QString::number(lim_sup2/2);
+        qtemp+=QString::number(lim_sup2/5);
         qtemp+=" V/div";
         ui->pBdivY->setText(qtemp);
 
         QVector<double> x(c_muestras+1),y(c_muestras+1);
+        double xt;
 
         for(unsigned int i=0;i<c_muestras;i++) {
             x[i]=limx*i/c_muestras;
 
-            if(i<=c_muestras/4)
-                y[i]=(configuracion_act.vpp*2)*x[i]*qPow(10,-(configuracion_act.freq_mult+3))*configuracion_act.freq*qPow(10,configuracion_act.freq_mult)+configuracion_act.offset;
-            else if (i<=c_muestras*3/4)
-                y[i]=-(configuracion_act.vpp*2)*x[i]*qPow(10,-(configuracion_act.freq_mult+3))*configuracion_act.freq*qPow(10,configuracion_act.freq_mult)+configuracion_act.vpp+configuracion_act.offset;
+            xt=x[i]-lim_sup1*(int)((x[i])/lim_sup1);
+
+            if(xt<=lim_sup1/4)
+                y[i]=(configuracion_act.vpp*2)*xt*qPow(10,-(configuracion_act.freq_mult+3))*configuracion_act.freq*qPow(10,configuracion_act.freq_mult)+configuracion_act.offset;
+            else if (xt<=lim_sup1*3/4)
+                y[i]=-(configuracion_act.vpp*2)*xt*qPow(10,-(configuracion_act.freq_mult+3))*configuracion_act.freq*qPow(10,configuracion_act.freq_mult)+configuracion_act.vpp+configuracion_act.offset;
             else
-                y[i]=(configuracion_act.vpp*2)*x[i]*qPow(10,-(configuracion_act.freq_mult+3))*configuracion_act.freq*qPow(10,configuracion_act.freq_mult)-2*configuracion_act.vpp+configuracion_act.offset;
+                y[i]=(configuracion_act.vpp*2)*xt*qPow(10,-(configuracion_act.freq_mult+3))*configuracion_act.freq*qPow(10,configuracion_act.freq_mult)-2*configuracion_act.vpp+configuracion_act.offset;
+
         }
 
         ui->grafico->graph(0)->setData(x,y);
@@ -196,6 +220,18 @@ void MainWindow::acomodar_limx()
     for(int i=0;i*5<1000;i++) {
         if(limx <= i*5) {
             limx = i*5;
+            break;
+            }
+    }
+}
+
+void MainWindow::acomodar_limy()
+{
+    limy=(((configuracion_act.vpp)/2)+qAbs(configuracion_act.offset))*1.5;
+
+    for(int i=0;i*5<1000;i++) {
+        if(limy <= i*5) {
+            limy = i*5;
             break;
             }
     }
@@ -262,5 +298,18 @@ void str_config::escribir_mem(str_config *actual)
 
 void MainWindow::on_pBVpp_clicked()
 {
-
+    if(ui->lbSlVpp->isVisible() == false) {
+        ui->lbSlVpp->setVisible(true);
+        ui->SlVpp->setVisible(true);
+        //agregar asignacion de valor
+        ui->lbSloffset->setVisible(true);
+        ui->Sloffset->setVisible(true);
+        //agregar asignacion de valor
+    }
+    else {
+        ui->lbSlVpp->setVisible(false);
+        ui->SlVpp->setVisible(false);
+        ui->lbSloffset->setVisible(false);
+        ui->Sloffset->setVisible(false);
+    }
 }

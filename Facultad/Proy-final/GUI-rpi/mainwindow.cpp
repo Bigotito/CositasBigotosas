@@ -7,6 +7,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    vppoffset.show();
+    vppoffset.hide();
+
     QBrush fondo;
     fondo.setColor(QColor(0,0,0));
     ui->grafico->setBackground(fondo);
@@ -36,18 +39,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->grafico->addGraph();
     ui->grafico->graph(0)->setPen(QPen(QColor(255,0,0),3));
     ui->grafico->yAxis->ticker()->setTickCount(10);
-
-    ui->lbSlVpp->setVisible(false);
-    ui->lbSloffset->setVisible(false);
-    ui->lbSlFreq->setVisible(false);
-    ui->lbSldivx->setVisible(false);
-    ui->lbSldivy->setVisible(false);
-    ui->SlVpp->setVisible(false);
-    ui->Sloffset->setVisible(false);
-    ui->SlFreq->setVisible(false);
-    ui->Sldivx->setVisible(false);
-    ui->Sldivy->setVisible(false);
-    ui->gbondas->setVisible(false);
 
     configuracion_act=configuracion_act.leer_mem();
     acomodar_limx();
@@ -298,18 +289,28 @@ void str_config::escribir_mem(str_config *actual)
 
 void MainWindow::on_pBVpp_clicked()
 {
-    if(ui->lbSlVpp->isVisible() == false) {
-        ui->lbSlVpp->setVisible(true);
-        ui->SlVpp->setVisible(true);
-        //agregar asignacion de valor
-        ui->lbSloffset->setVisible(true);
-        ui->Sloffset->setVisible(true);
-        //agregar asignacion de valor
+    if(vppoffset.isVisible() == false)
+        vppoffset.show();
+    else
+        vppoffset.hide();
+}
+
+void MainWindow::on_pBfreq_clicked()
+{
+    if(ui->lbSlFreq->isVisible() == false) {
+
     }
     else {
-        ui->lbSlVpp->setVisible(false);
-        ui->SlVpp->setVisible(false);
-        ui->lbSloffset->setVisible(false);
-        ui->Sloffset->setVisible(false);
+
+    }
+}
+
+void MainWindow::on_pBond_clicked()
+{
+    if(ui->gbondas->isVisible() == false) {
+
+    }
+    else{
+
     }
 }

@@ -26,14 +26,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-        qcustomplot.cpp
+        qcustomplot.cpp \
+    opciones.cpp
 
 HEADERS += \
         mainwindow.h \
-        qcustomplot.h
+        qcustomplot.h \
+    opciones.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    opciones.ui
 
 RESOURCES += \
         Resources.qrc

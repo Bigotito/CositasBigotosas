@@ -4,6 +4,7 @@
 #define c_muestras 1000
 
 #include <QMainWindow>
+#include "opciones.h"
 
 typedef struct str_config {
     float vpp;
@@ -39,6 +40,8 @@ public:
     config configuracion_act;
     float limx;
     float limy;
+    opciones vppoffset;
+
     //double c_muestras;
     void actualizar(void);
     void acomodar_limx(void);
@@ -47,6 +50,10 @@ public:
 
 private slots:
     void on_pBVpp_clicked();
+
+    void on_pBfreq_clicked();
+
+    void on_pBond_clicked();
 
 private:
     Ui::MainWindow *ui;

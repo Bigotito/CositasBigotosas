@@ -4,7 +4,9 @@
 #define c_muestras 1000
 
 #include <QMainWindow>
+#include <QMouseEvent>
 #include "opciones.h"
+#include "selondas.h"
 
 typedef struct str_config {
     float vpp;
@@ -40,7 +42,12 @@ public:
     config configuracion_act;
     float limx;
     float limy;
-    opciones vppoffset;
+    opciones opcVppOffset;
+    opciones opcFreq;
+    opciones opcdivx;
+    opciones opcdivy;
+    selOndas sOndas;
+
 
     //double c_muestras;
     void actualizar(void);
@@ -54,6 +61,14 @@ private slots:
     void on_pBfreq_clicked();
 
     void on_pBond_clicked();
+
+    void on_MainWindow_destroyed();
+
+    void mouseReleaseEvent(QMouseEvent *event);
+
+public slots:
+    void leer_valores(int sel);
+    void enfocar(void);
 
 private:
     Ui::MainWindow *ui;

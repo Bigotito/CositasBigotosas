@@ -6,21 +6,30 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    move(0,0);
 
-    vppoffset.show();
-    vppoffset.hide();
+    connect(&opcVppOffset,SIGNAL(valor_cambiado(int)),this,SLOT(leer_valores(int)));
+    connect(&opcFreq,SIGNAL(valor_cambiado(int)),this,SLOT(leer_valores(int)));
+    connect(&opcdivx,SIGNAL(valor_cambiado(int)),this,SLOT(leer_valores(int)));
+    connect(&opcdivy,SIGNAL(valor_cambiado(int)),this,SLOT(leer_valores(int)));
+    //connect(this,SIGNAL(mouseReleaseEvent()),this,SLOT(enfocar()));
 
-    QBrush fondo;
-    fondo.setColor(QColor(0,0,0));
-    ui->grafico->setBackground(fondo);
+
+    opcVppOffset.inic(0);
+    opcVppOffset.move(0,160);
+    opcFreq.inic(1);
+    opcFreq.move(161,160);
+    opcdivx.inic(2);
+    opcdivy.inic(3);
+
     ui->grafico->xAxis->setBasePen(QPen(Qt::blue,1));
     ui->grafico->yAxis->setBasePen(QPen(Qt::blue,1));
     ui->grafico->xAxis->setTickPen(QPen(Qt::blue, 1));
     ui->grafico->yAxis->setTickPen(QPen(Qt::blue, 1));
     ui->grafico->xAxis->setSubTickPen(QPen(Qt::blue, 1));
     ui->grafico->yAxis->setSubTickPen(QPen(Qt::blue, 1));
-    ui->grafico->xAxis->setTickLabelColor(Qt::white);
-    ui->grafico->yAxis->setTickLabelColor(Qt::white);
+//    ui->grafico->xAxis->setTickLabelColor(Qt::white);
+//    ui->grafico->yAxis->setTickLabelColor(Qt::white);
     ui->grafico->xAxis->grid()->setPen(QPen(QColor(140, 140, 140), 1, Qt::DotLine));
     ui->grafico->yAxis->grid()->setPen(QPen(QColor(140, 140, 140), 1, Qt::DotLine));
     ui->grafico->xAxis->grid()->setSubGridPen(QPen(QColor(80, 80, 80), 1, Qt::DotLine));
@@ -69,7 +78,6 @@ void MainWindow::actualizar()
     double c1;
     int c2;
     QString qtemp,qtemp2;
-
     configuracion_act.escribir_mem(&configuracion_act);
 
     lim_sup1=1000/configuracion_act.freq;
@@ -202,6 +210,42 @@ void MainWindow::actualizar()
     }
     }
 
+    ui->grafico->replot();
+}
+
+void MainWindow::leer_valores(int sel)
+{
+    switch (sel) {
+    case 0: {
+        if(opcVppOffset.isVisible() == true){
+            configuracion_act.vpp=(float)opcVppOffset.leer_valor(0)/10;
+            configuracion_act.offset=(float)opcVppOffset.leer_valor(1)/10;
+
+            acomodar_limx();
+            acomodar_limy();
+            actualizar();
+        }
+        break;
+    }
+    case 1: {
+        if(opcFreq.isVisible() == true) {
+            configuracion_act.freq=opcFreq.leer_valor(0);
+        }
+        break;
+    }
+    case 2: {
+
+    }
+    }
+}
+
+void MainWindow::enfocar()
+{
+    opcVppOffset.activateWindow();
+    opcFreq.activateWindow();
+    opcdivx.activateWindow();
+    opcdivy.activateWindow();
+    sOndas.activateWindow();
 }
 
 void MainWindow::acomodar_limx()
@@ -289,28 +333,42 @@ void str_config::escribir_mem(str_config *actual)
 
 void MainWindow::on_pBVpp_clicked()
 {
-    if(vppoffset.isVisible() == false)
-        vppoffset.show();
-    else
-        vppoffset.hide();
+    if(opcVppOffset.isVisible() == false){
+        opcVppOffset.show();
+        opcVppOffset.cargar_valor((int)(configuracion_act.vpp)*10,(int)(configuracion_act.offset)*10);
+    }
+    else{
+        opcVppOffset.hide();
+    }
+
 }
 
 void MainWindow::on_pBfreq_clicked()
 {
-    if(ui->lbSlFreq->isVisible() == false) {
-
+    if(opcFreq.isVisible() == false) {
+        opcFreq.show();
     }
     else {
-
+        opcFreq.hide();
     }
 }
 
 void MainWindow::on_pBond_clicked()
 {
-    if(ui->gbondas->isVisible() == false) {
-
+    if(sOndas.isVisible() == false) {
+        sOndas.show();
     }
-    else{
-
+    else {
+        sOndas.hide();
     }
+}
+
+void MainWindow::on_MainWindow_destroyed()
+{
+
+}
+
+void MainWindow::mouseReleaseEvent(QMouseEvent *event)
+{
+    enfocar();
 }

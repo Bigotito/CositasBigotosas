@@ -27,16 +27,19 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
         qcustomplot.cpp \
-    opciones.cpp
+    opciones.cpp \
+    selondas.cpp
 
 HEADERS += \
         mainwindow.h \
         qcustomplot.h \
-    opciones.h
+    opciones.h \
+    selondas.h
 
 FORMS += \
         mainwindow.ui \
-    opciones.ui
+    opciones.ui \
+    selondas.ui
 
 RESOURCES += \
         Resources.qrc

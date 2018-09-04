@@ -24,6 +24,8 @@ private slots:
 
     void on_Sl1_valueChanged(int value);
 
+    void on_pushButton_clicked();
+
 signals:
     void valor_cambiado (int mact);
 

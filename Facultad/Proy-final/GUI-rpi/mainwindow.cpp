@@ -28,6 +28,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->grafico->yAxis->setTickPen(QPen(Qt::blue, 1));
     ui->grafico->xAxis->setSubTickPen(QPen(Qt::blue, 1));
     ui->grafico->yAxis->setSubTickPen(QPen(Qt::blue, 1));
+    ui->grafico->yAxis->axisRect()->setAutoMargins(QCP::msNone);
+    ui->grafico->yAxis->axisRect()->setMargins(QMargins(70,15,15,45));
+    ui->grafico->yAxis->setTickLabelPadding(5);
 //    ui->grafico->xAxis->setTickLabelColor(Qt::white);
 //    ui->grafico->yAxis->setTickLabelColor(Qt::white);
     ui->grafico->xAxis->grid()->setPen(QPen(QColor(140, 140, 140), 1, Qt::DotLine));
@@ -39,9 +42,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->grafico->xAxis->grid()->setZeroLinePen(Qt::NoPen);
     ui->grafico->yAxis->grid()->setZeroLinePen(Qt::NoPen);
     ui->grafico->xAxis->setLabel("[ms]");
-    ui->grafico->xAxis->setLabelColor(Qt::yellow);
+    ui->grafico->xAxis->setLabelColor(Qt::blue);
     ui->grafico->yAxis->setLabel("[V]");
-    ui->grafico->yAxis->setLabelColor(Qt::yellow);
+    ui->grafico->yAxis->setLabelColor(Qt::blue);
 
     //Carga de valores anteriores guardados en memoria
 
@@ -126,8 +129,8 @@ void MainWindow::actualizar()
     ui->pBfreq->setText(qtemp);
 
     qtemp.clear();
-    qtemp+="Vpp = ";
-    qtemp+=QString::number(configuracion_act.vpp);
+    qtemp+="Amp = ";
+    qtemp+=QString::number((configuracion_act.vpp)/2);
     qtemp+=" V\nOffset = ";
     qtemp+=QString::number(configuracion_act.offset);
     qtemp+=" V";
@@ -140,7 +143,12 @@ void MainWindow::actualizar()
         ui->grafico->yAxis->setRange(-lim_sup2,lim_sup2);
 
         qtemp.clear();
-        qtemp+=QString::number(lim_sup2/5);
+
+        if(lim_sup2==15)
+            qtemp+=QString::number((lim_sup2/6));
+        else
+            qtemp+=QString::number((lim_sup2/5));
+
         qtemp+=" V/div";
         ui->pBdivY->setText(qtemp);
 
@@ -230,6 +238,8 @@ void MainWindow::leer_valores(int sel)
     case 1: {
         if(opcFreq.isVisible() == true) {
             configuracion_act.freq=opcFreq.leer_valor(0);
+
+            actualizar();
         }
         break;
     }
@@ -335,7 +345,7 @@ void MainWindow::on_pBVpp_clicked()
 {
     if(opcVppOffset.isVisible() == false){
         opcVppOffset.show();
-        opcVppOffset.cargar_valor((int)(configuracion_act.vpp)*10,(int)(configuracion_act.offset)*10);
+        opcVppOffset.cargar_valor((int)((configuracion_act.vpp)*10),(int)((configuracion_act.offset)*10));
     }
     else{
         opcVppOffset.hide();
